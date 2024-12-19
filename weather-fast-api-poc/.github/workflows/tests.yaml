@@ -1,0 +1,48 @@
+name: Test and lint weather-fast-api-poc
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.10]
+        poetry-version: [1.2.2]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: actions/cache@v3
+        name: Cache Poetry installation
+        id: cache-poetry
+        with:
+          path: ~/.local
+          key: poetry-${{ matrix.poetry-version }}-${{ matrix.python-version }}-0
+      - uses: snok/install-poetry@v1
+        name: Install poetry
+        with:
+          version: ${{ matrix.poetry-version }}
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+        if: steps.cache-poetry.outputs.cache-hit != 'true'
+      - uses: actions/cache@v3
+        name: Cache dependencies
+        id: cache-deps
+        with:
+          path: .venv
+          key: deps-${{ matrix.poetry-version }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+      - run: poetry install --no-interaction --no-root --only=testing
+        name: Install dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+      - run: poetry run pytest --cov-report xml
+        name: Run tests
+      - run: poetry run pylint weather-fast-api-poc
+        name: Run pylint
+      - run: poetry run mypy weather-fast-api-poc
+        name: Run mypy
+      - run: poetry run bandit -r weather-fast-api-poc
+        name: Run bandit
