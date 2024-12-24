@@ -10,6 +10,7 @@ To run the webserver:
 - run the app `uvicorn weather_fast_api_poc.main:app --reload`
 
 Run the VENV: Instructions here: https://fastapi.tiangolo.com/virtual-environments/#create-a-virtual-environment
-source .fastapi_weather_venv/bin/activate
+`source .fastapi_weather_venv/bin/activate`
 
-Need to debug why the server is crashing right now. 
+To run the server using uvicorn, runs
+`uvicorn weather_fast_api_poc.main:app --reload`

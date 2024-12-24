@@ -6,15 +6,15 @@ from fastapi import APIRouter, status
 
 
 router = APIRouter(
-    prefix='/api/healthcheck',
+    prefix='/api/health_check',
     tags=['healthcheck']
 )
 
 
-@router.get('/', status_code=status.HTTP_204_NO_CONTENT)
-async def healthcheck():
+@router.get('/', status_code=status.HTTP_200_OK)
+async def health_check():
     """
     Healthcheck endpoint.
     @TODO: Implement healthcheck.
     """
-    return
+    return "Server is healthy"
