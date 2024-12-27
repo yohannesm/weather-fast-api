@@ -14,3 +14,11 @@ Run the VENV: Instructions here: https://fastapi.tiangolo.com/virtual-environmen
 
 To run the server using uvicorn, runs
 `uvicorn weather_fast_api_poc.main:app --reload`
+
+
+To hit the services there are 2 active endpoints now. Health check and weather query using city,(opt state), (opt country code). 
+Example: 
+`curl -L -XGET http://localhost:8000/api/health_check`
+`curl -L -XGET http://localhost:8000/api/weather/\?q=Seattle`
+
+-L is needed because there's redirect happening with the FastAPI
