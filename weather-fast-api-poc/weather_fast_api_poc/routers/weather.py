@@ -12,12 +12,12 @@ def get_temp_description(temp):
         return "Cold"
     elif temp  >= 15.0 and temp < 25.0:
         return "Mild"
-    elif temp >= 30.0 and temp < 40.0:
+    elif temp >= 25.0 and temp < 35.0:
         return "Warm"
-    elif temp >= 40.0:
+    elif temp >= 35.0:
         return "Hot"
     else:
-        return "Extreme Temperature"
+        return "Extreme Heat"
 
 @router.get("/api/weather", response_model=WeatherApiResponse)
 async def get_weather(
