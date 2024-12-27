@@ -11,9 +11,10 @@ class Settings(BaseSettings):
     debug: bool = False
     log_file: str = 'stdout'
     openweather_api_key: str = os.getenv("OPENWEATHER_API_KEY")
-
+"""
     class Config:
         env_file = "dev.env"
+"""
 
 
 @lru_cache

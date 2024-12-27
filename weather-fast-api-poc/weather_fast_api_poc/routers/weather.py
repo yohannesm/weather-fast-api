@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Query
 from datetime import datetime
 from ..models import WeatherApiResponse
+from ..services.weather_service import get_lat_long, get_current_weather
 
 router = APIRouter()
 
@@ -30,16 +31,16 @@ async def get_weather(
 
     try:
         # Get latitude and longitude from the geocoding API
-        coord = await get_lat_long(city, state, country)
+        lat, lon = await get_lat_long(city, state, country)
 
         # Get current weather data using latitude and longitude
-        weather_data = await get_current_weather(coord["lat"], coord["lon"])
+        weather_data = await get_current_weather(lat, lon)
 
         # Build and return the response
         return WeatherApiResponse(
             coord={
-                "lon": coord["lon"],
-                "lat": coord["lat"]
+                "lon": lon,
+                "lat": lat
             },
             weather={
                 "main": weather_data["weather"][0]["main"],
