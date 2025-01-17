@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query
 from datetime import datetime
-from ..models import WeatherApiResponse
+from ..models import WeatherApiResponse, Coord, Weather, Temperature
 from ..services.weather_service import get_lat_long, get_current_weather
 
 router = APIRouter()
@@ -38,10 +38,10 @@ async def get_weather(
 
         # Build and return the response
         return WeatherApiResponse(
-            coord={
-                "lon": lon,
-                "lat": lat
-            },
+            coord=Coord(
+                lon=lon,
+                lat=lat
+            ),
             weather={
                 "main": weather_data["weather"][0]["main"],
                 "description": weather_data["weather"][0]["description"]

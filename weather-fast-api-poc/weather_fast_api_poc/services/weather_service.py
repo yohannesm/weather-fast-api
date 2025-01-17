@@ -9,8 +9,6 @@ OPENWEATHER_API_KEY = "a37fd5f0fbfb4d081daec8f8b9eca030"
 
 async def get_lat_long(city: str, state: str = None, country: str = None):
     settings = get_settings()
-    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-    print(OPENWEATHER_API_KEY)
 
     location_parts = [city]
     if state:
@@ -40,8 +38,6 @@ async def get_lat_long(city: str, state: str = None, country: str = None):
 
 async def get_current_weather(lat: float, lon: float):
     settings = get_settings()
-    print("BBBBBBBBBBBBBBBBBBBBBB")
-    print(OPENWEATHER_API_KEY)
     params = {"lat": lat, "lon": lon, "appid": OPENWEATHER_API_KEY, "units": "metric"}
     async with httpx.AsyncClient() as client:
         response = await client.get(BASE_WEATHER_URL, params=params)
